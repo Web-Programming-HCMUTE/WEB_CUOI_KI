@@ -21,7 +21,7 @@
         <!-- Update database on startup -->
         <property name="hibernate.hbm2ddl.auto">update</property>
         <!-- SQL dialect -->
-       
+       <property name="hibernate.enable_lazy_load_no_trans">true</property>
         <!-- Annotated entity classes -->
         <mapping class="model.HotelDetail"/>
         <mapping class="model.Hotel"/>

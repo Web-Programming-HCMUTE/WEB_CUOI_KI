@@ -37,7 +37,7 @@ public class Payment implements Serializable{
 	private String description;
 	
 	// thanh toán cho bài đăng khách sạn nào
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EAGER)
 	private Hotel hotel;
 	
 	@OneToOne(fetch = FetchType.LAZY)

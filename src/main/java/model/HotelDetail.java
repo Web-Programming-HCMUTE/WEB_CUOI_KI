@@ -37,7 +37,7 @@ public class HotelDetail implements Serializable {
 	private String description;
 
 	@OneToOne
-	private Hotel hotel;
+	private Hotel hotel;	
 
 	// 1 nhà trọ có nhiều người đặt lịch
 	@OneToMany

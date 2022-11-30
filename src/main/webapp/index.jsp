@@ -95,12 +95,13 @@
 	<!-- about_area_end -->
 
 	<!-- offers_area_start -->
-	<div class="offers_area">
+	<div class="offers_area pb-0">
 		<div class="container">
 			<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 			<div class="row">
-				<c:forEach items="${hotels}" var="hotel">
+				<c:forEach items="${hotels}" begin="1" end="3" step="1"
+					var="hotel">
 					<a href="RoomServlet?id=${hotel.id }">
 						<div class="col-xl-4 col-md-4 my-3">
 							<div class="single_offers">
@@ -110,7 +111,7 @@
 								<h4 class="p-3 font-weight-bold" style="height: 70px;">${hotel.content }</h4>
 								<h4>Số phòng: ${hotel.hotelDetail.numberRoom }</h4>
 								<p>Giá: ${hotel.hotelDetail.price } VNĐ</p>
-								<p style="height: 200px; display: block">
+								<p style="height: 200px; display: block; text-align: justify;">
 									${hotel.hotelDetail.description }</p>
 								<a href="#" class="book_now">Đặt ngay</a>
 							</div>

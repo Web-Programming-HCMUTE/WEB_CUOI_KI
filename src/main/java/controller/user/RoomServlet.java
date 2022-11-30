@@ -50,12 +50,18 @@ public class RoomServlet extends HttpServlet {
 
 		if (actionString != null && actionString.equalsIgnoreCase("delete-comment")) {
 			doPost_Delete_Comment(request, response);
-			request.setAttribute("hotel", hotelDAO.get(Integer.parseInt(id)));
+			Hotel hotel =  hotelDAO.get(Integer.parseInt(id));
+			hotel.getHotelDetail();
+			hotel.getComment();
+			request.setAttribute("hotel",hotel);
 			request.getRequestDispatcher("./single-blog.jsp").forward(request, response);
 			return;
 		}
 		if (id != null) {
-			request.setAttribute("hotel", hotelDAO.get(Integer.parseInt(id)));
+			Hotel hotel =  hotelDAO.get(Integer.parseInt(id));
+			hotel.getHotelDetail();
+			hotel.getComment();
+			request.setAttribute("hotel",hotel);
 			request.getRequestDispatcher("./single-blog.jsp").forward(request, response);
 			return;
 		}

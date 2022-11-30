@@ -39,7 +39,7 @@ public class Hotel implements Serializable {
 	@Column(name="image", columnDefinition="TEXT")
 	private String image;
 
-	@OneToMany(fetch = FetchType.EAGER)
+	@OneToMany(fetch = FetchType.LAZY)
 	private List<Comment> comment;
 
 	@OneToOne(fetch = FetchType.EAGER)

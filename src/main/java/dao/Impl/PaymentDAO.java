@@ -15,6 +15,7 @@ public class PaymentDAO extends JpaEntityManager implements IPaymentDAO {
 		// TODO Auto-generated method stub
 		return super.getAll(Payment.class);
 	}
+	
 
 	@Override
 	public Payment getPaymentById(int id) {
