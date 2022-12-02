@@ -19,6 +19,7 @@ import dao.Impl.BookDetailDAO;
 import dao.Impl.HotelDAO;
 import dao.Impl.HotelDetailDAO;
 import model.HotelDetail;
+import util.SendEmail;
 import model.Hotel;
 
 /**
@@ -135,6 +136,11 @@ public class HotelAdminServlet extends HttpServlet {
 		hotelDetail.setDesc(desc);
 
 		postDAO.savePostAndHotel(post, hotelDetail);
+		
+		SendEmail sm = new SendEmail();
+		 
+		boolean test = sm.sendEmail(null);
+		 
 	}
 	
 	protected void doPost_Update(HttpServletRequest request, HttpServletResponse response)

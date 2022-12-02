@@ -54,13 +54,12 @@ public class UserLoginServlet extends HttpServlet {
 	protected void doPost_Login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
+		UserLogin userLogin = userLoginDAO.checkLogin(username, password);
 		
-		if(userLoginDAO.checkLogin(username, password)) {
+		if(userLogin != null) {
 			HttpSession session = request.getSession(true);
-			session.setAttribute("user", username);
+			session.setAttribute("user", userLogin);
 			response.sendRedirect("HomeServlet");
-			
-			return;
 		}
 		else {
 			request.setAttribute("message", "Không tìm thấy tài khoản");

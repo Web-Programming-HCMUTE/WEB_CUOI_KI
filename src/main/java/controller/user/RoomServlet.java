@@ -54,7 +54,7 @@ public class RoomServlet extends HttpServlet {
 			hotel.getHotelDetail();
 			hotel.getComment();
 			request.setAttribute("hotel",hotel);
-			request.getRequestDispatcher("./single-blog.jsp").forward(request, response);
+			request.getRequestDispatcher("./single-room.jsp").forward(request, response);
 			return;
 		}
 		if (id != null) {
@@ -62,7 +62,7 @@ public class RoomServlet extends HttpServlet {
 			hotel.getHotelDetail();
 			hotel.getComment();
 			request.setAttribute("hotel",hotel);
-			request.getRequestDispatcher("./single-blog.jsp").forward(request, response);
+			request.getRequestDispatcher("./single-room.jsp").forward(request, response);
 			return;
 		}
 

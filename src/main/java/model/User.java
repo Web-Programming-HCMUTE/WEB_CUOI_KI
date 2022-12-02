@@ -17,7 +17,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@AllArgsConstructor
 @Data
 @Table(name="user_hotel")
 public class User implements Serializable{

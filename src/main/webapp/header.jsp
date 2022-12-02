@@ -28,13 +28,14 @@
 								<a class="popup-with-form" href="#test-form">Đặt phòng</a>
 							</div>
 							<div>
+							<%@ page import="model.UserLogin" %>
 								<%
-								String username = (String) session.getAttribute("user");
-								if (username != null) {
+								UserLogin user = (UserLogin) session.getAttribute("user");
+								if (user != null) {
 								%>
 								<a href="HotelAdminServlet" style="height: 42px" class="mx-2 btn btn-primary btn-lg rounded-0"
 									role="button" aria-disabled="true">
-									<i class="bi bi-person-circle mx-1"></i>${ username}</a>
+									<i class="bi bi-person-circle mx-1"></i><% out.println(user.getUsername()); %></a>
 
 								<%
 								} else {

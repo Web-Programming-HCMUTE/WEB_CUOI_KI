@@ -138,7 +138,8 @@
 											<img src="img/comment/comment_1.png" alt="">
 										</div>
 										<div class="desc">
-											<p class="comment" style="color: black; font-weight: 500; font-size: 18px;">
+											<p class="comment"
+												style="color: black; font-weight: 500; font-size: 18px;">
 												${comment.content }</p>
 											<div class="d-flex justify-content-around">
 												<div class="d-flex align-items-center">
@@ -163,6 +164,15 @@
 							</div>
 						</c:forEach>
 					</div>
+					<%@ page import="model.UserLogin"%>
+					<%
+					UserLogin userauth = (UserLogin) session.getAttribute("user");
+					if (userauth == null) { %>
+						<div class="comment-form"> 
+							<h4>Hãy đăng nhập để viết bình luận <a href="./login.jsp">Login</a> </h4>
+						</div>
+					<% } else {
+					%>
 					<div class="comment-form">
 						<h4>Leave a Reply</h4>
 						<form class="form-contact comment_form"
@@ -184,6 +194,7 @@
 							</div>
 						</form>
 					</div>
+				<%} %>
 				</div>
 				<div class="col-lg-4">
 					<div class="blog_right_sidebar">

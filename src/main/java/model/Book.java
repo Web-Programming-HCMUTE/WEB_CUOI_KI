@@ -26,5 +26,4 @@ public class Book {
 	@OneToOne
 	private BookDetail bookDetail;
 	
-	
 }

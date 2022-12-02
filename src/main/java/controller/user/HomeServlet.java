@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import dao.Impl.HotelDAO;
 import model.Hotel;
+import model.UserLogin;
 
 /**
  * Servlet implementation class HomeServlet
@@ -35,9 +36,9 @@ public class HomeServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		List<Hotel> hotels = hotelDAO.getAll();
 		
-		String username = (String) request.getSession(false).getAttribute("user");
+		UserLogin username = (UserLogin) request.getSession(false).getAttribute("user");
 		if(username != null) {
-			request.setAttribute("username", username);
+			request.setAttribute("user", username);
 		}
 			
 		request.setAttribute("hotels", hotelDAO.getAll());

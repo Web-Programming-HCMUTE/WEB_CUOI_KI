@@ -15,7 +15,6 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
 @Data
 @Table(name = "user_login")
 public class UserLogin {
