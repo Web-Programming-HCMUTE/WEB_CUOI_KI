@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
@@ -18,7 +19,9 @@ import dao.JpaEntityManager;
 import dao.Impl.BookDetailDAO;
 import dao.Impl.HotelDAO;
 import dao.Impl.HotelDetailDAO;
+import dao.Impl.UserDAO;
 import model.HotelDetail;
+import model.UserLogin;
 import util.SendEmail;
 import model.Hotel;
 
@@ -32,7 +35,7 @@ public class HotelAdminServlet extends HttpServlet {
 	private BookDetailDAO bookDetailDAO = new BookDetailDAO();
 	private HotelDAO postDAO = new HotelDAO();
 	private HotelDetailDAO hotelDetailDAO = new HotelDetailDAO();
-	private JpaEntityManager jpaEntityManager = new JpaEntityManager();
+	private UserDAO userDAO = new UserDAO();
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -138,9 +141,11 @@ public class HotelAdminServlet extends HttpServlet {
 		postDAO.savePostAndHotel(post, hotelDetail);
 		
 		SendEmail sm = new SendEmail();
-		 
-		boolean test = sm.sendEmail(null);
-		 
+		HttpSession session = request.getSession(true);
+		UserLogin userLogin = (UserLogin) session.getAttribute("user");
+		if(userLogin != null) {
+			boolean test = sm.sendEmail(userDAO.getByName(userLogin.getUsername()));
+		}
 	}
 	
 	protected void doPost_Update(HttpServletRequest request, HttpServletResponse response)

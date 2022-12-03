@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -38,11 +39,14 @@ public class Hotel implements Serializable {
 
 	@Column(name="image", columnDefinition="TEXT")
 	private String image;
-
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	private User user;
+	
 	@OneToMany(fetch = FetchType.LAZY)
 	private List<Comment> comment;
 
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.LAZY)
 	private HotelDetail hotelDetail;
 
 	public int getId() {

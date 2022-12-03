@@ -548,7 +548,7 @@ nav .profile-details i {
 			</a></li>
 			 <%
 					UserLogin user = (UserLogin) session.getAttribute("user");
-					if(user.getRole().equals("ADMIN")){
+					if(user != null && user.getRole().equals("ADMIN")){
 					 %> 
 			<li><a href="UserServlet"> <i class='bx bx-box'></i> <span
 					class="links_name">User</span>
