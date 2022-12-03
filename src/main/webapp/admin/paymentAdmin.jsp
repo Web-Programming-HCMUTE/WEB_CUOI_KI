@@ -337,6 +337,7 @@ table.table .avatar {
 																	'#editEmployeeModal #hotel')
 																	.val(
 																			result.hotel);
+															$('#editEmployeeModal #userPayment').val(result.userPayment)
 
 														}
 
@@ -445,7 +446,7 @@ table.table .avatar {
 						</div>
 						<div class="form-group">
 							<select class="form-select" name="paymentOption"
-								id="paymentOption" style="width:  335px!important;"
+								id="paymentOption" style="width: 335px !important;"
 								aria-label="Default select example">
 								<option value="Momo">Momo</option>
 								<option value="Vnpay">Vnpay</option>
@@ -453,12 +454,18 @@ table.table .avatar {
 							</select>
 						</div>
 						<div class="form-group">
-							<select class="form-select" id="hotel" style="width:  335px!important;"
+							<select class="form-select" id="hotel"
+								style="width: 335px !important;"
 								aria-label="Default select example" name="hotel">
 								<c:forEach var="item" items="${hotels}">
 									<option value="${item.id}">${item.content}</option>
 								</c:forEach>
 							</select>
+						</div>
+						<div class="form-group">
+							<label>User Payment</label>
+							<input id="userPayment" name="userPayment"
+								class="form-control" required></input>
 						</div>
 
 						<div class="form-group">
@@ -495,6 +502,7 @@ table.table .avatar {
 						<div class="form-group">
 							<select class="form-select" name="paymentOption"
 								id="paymentOption" class="form-select"
+								style="width: 335px !important;"
 								aria-label="Default select example">
 								<option value="Momo">Momo</option>
 								<option value="Vnpay">Vnpay</option>
@@ -503,16 +511,21 @@ table.table .avatar {
 						</div>
 						<div class="form-group">
 							<select class="form-select" id="hotel"
+								style="width: 335px !important;"
 								aria-label="Default select example" name="hotel">
 								<c:forEach var="item" items="${hotels}">
 									<option value="${item.id}">${item.content}</option>
 								</c:forEach>
 							</select>
 						</div>
-
+						<div class="form-group">
+							<label>User Payment</label>
+							<input name="description" id="userPayment" name="userPayment"
+								class="form-control" required></input>
+						</div>
 						<div class="form-group">
 							<label>Description</label>
-							<textarea name="description" id="description" name="desc"
+							<textarea id="description" name="desc"
 								class="form-control" required></textarea>
 						</div>
 					</div>

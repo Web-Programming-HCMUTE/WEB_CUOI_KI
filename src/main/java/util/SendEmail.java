@@ -140,7 +140,7 @@ public class SendEmail {
             		+ "                                                                    </tr> \r\n"
             		+ "                                                                    <tr> \r\n"
             		+ "                                                                        <td style= \"width: 55%; font-size: 14px; line-height: 18px; color: #666666; \"> \r\n"
-            		+ "                                                                            Syntax: <strong>\"DK_Ten Nha Tro_UserName\"</strong>\r\n"
+            		+ "                                                                            Syntax: <strong>\"DK_Ten Nha Tro_UserName_Ma Nha Tro\"</strong>\r\n"
             		+ "                                                                        </td> \r\n"
             		+ "\r\n"
             		+ "                                                                    </tr> \r\n"

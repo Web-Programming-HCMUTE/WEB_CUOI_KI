@@ -75,7 +75,7 @@ public class UserLoginServlet extends HttpServlet {
 		String password = (String) request.getParameter("password");
 
 		User user = new User();
-		user.setName(name);
+		user.setName(username);
 		user.setEmail(email);
 		user.setPhone(phone);
 

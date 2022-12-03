@@ -21,6 +21,7 @@ import dao.Impl.HotelDAO;
 import dao.Impl.HotelDetailDAO;
 import dao.Impl.UserDAO;
 import model.HotelDetail;
+import model.User;
 import model.UserLogin;
 import util.SendEmail;
 import model.Hotel;
@@ -58,6 +59,7 @@ public class HotelAdminServlet extends HttpServlet {
 		
 		Hotel hotel = postDAO.get(id);
 		hotel.setComment(null);
+		hotel.setUser(null);
 		
 		Gson gson = new Gson();
 		
@@ -68,6 +70,21 @@ public class HotelAdminServlet extends HttpServlet {
 		writer.close();
 	}
 	
+	protected void doGet_Active(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		
+		int id = Integer.parseInt(request.getParameter("id"));
+		
+		Hotel hotel = postDAO.get(id);
+		if(hotel != null) {
+			hotel.setActivate(!hotel.getActivate());
+			postDAO.saveOrUpdate(hotel);
+		}
+			
+	}
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -75,9 +92,19 @@ public class HotelAdminServlet extends HttpServlet {
 		String action = request.getParameter("action");
 		if(null != action && action.equalsIgnoreCase("find")) {
 			doGet_Find(request, response);
+		} 
+		if(null != action && action.equalsIgnoreCase("active")) {
+			doGet_Active(request, response);
 		}
 		
-		request.setAttribute("hotels", postDAO.getAll(Hotel.class));
+		HttpSession session = request.getSession(true);
+		UserLogin userLogin = (UserLogin) session.getAttribute("user");
+		if(userLogin == null)
+			return;
+		if(userLogin.getRole().equals("USER"))
+			request.setAttribute("hotels", postDAO.getByUser(userLogin.getUsername()));
+		else
+			request.setAttribute("hotels", postDAO.getAll());
 		request.setAttribute("jspName", "hotelAdmin.jsp");
 		request.getRequestDispatcher("/admin/template.jsp").forward(request, response);
 	}
@@ -130,7 +157,18 @@ public class HotelAdminServlet extends HttpServlet {
 		post.setContent(content);
 		post.setCreateDate(new Date());
 		post.setImage(image);
+		post.setActivate(false);
+		
+		HttpSession session = request.getSession(true);
+		UserLogin userLogin = (UserLogin) session.getAttribute("user");
+		if(userLogin == null)
+			return;
+		User user = userDAO.getByName(userLogin.getUsername());
+		if(user == null)
+			return;
 
+		post.setUser(user);
+		
 		HotelDetail hotelDetail = new HotelDetail();
 		hotelDetail.setArea(Integer.parseInt(area));
 		hotelDetail.setNumberRoom(Integer.parseInt(numberRoom));
@@ -141,10 +179,9 @@ public class HotelAdminServlet extends HttpServlet {
 		postDAO.savePostAndHotel(post, hotelDetail);
 		
 		SendEmail sm = new SendEmail();
-		HttpSession session = request.getSession(true);
-		UserLogin userLogin = (UserLogin) session.getAttribute("user");
+		
 		if(userLogin != null) {
-			boolean test = sm.sendEmail(userDAO.getByName(userLogin.getUsername()));
+			boolean test = sm.sendEmail(user);
 		}
 	}
 	
@@ -156,6 +193,9 @@ public class HotelAdminServlet extends HttpServlet {
 		Hotel hotel = postDAO.get(id);
 		hotel.setContent(request.getParameter("content"));
 		hotel.setImage(request.getParameter("image"));
+		String[] check = request.getParameterValues("active");
+		if(check != null)
+			hotel.setActivate(Boolean.parseBoolean(check[0]));
 		
 		HotelDetail hotelDetail = hotelDetailDAO.get(HotelDetail.class, hotel.getHotelDetail().getId());
 		hotelDetail.setArea(Integer.parseInt(request.getParameter("area")));

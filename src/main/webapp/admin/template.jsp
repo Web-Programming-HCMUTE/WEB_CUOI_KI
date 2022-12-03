@@ -3,9 +3,8 @@
 <!DOCTYPE html>
 <!-- Designined by CodingLab | www.youtube.com/codinglabyt -->
 <html lang="en" dir="ltr">
-<%@ page import="model.UserLogin" %>
+<%@ page import="model.UserLogin"%>
 <%
-
 UserLogin userauth = (UserLogin) session.getAttribute("user");
 if (userauth == null) {
 	response.sendRedirect("login.jsp");
@@ -536,7 +535,7 @@ nav .profile-details i {
 				sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
 		}
 	</script>
-	<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 	<div class="sidebar">
 		<div class="logo-details">
 			<i class='bx bxl-c-plus-plus'></i> <span class="logo_name">Hotel
@@ -546,10 +545,10 @@ nav .profile-details i {
 			<li><a href="HotelAdminServlet" class="active"> <i
 					class='bx bx-grid-alt'></i> <span class="links_name">Hotel</span>
 			</a></li>
-			 <%
-					UserLogin user = (UserLogin) session.getAttribute("user");
-					if(user != null && user.getRole().equals("ADMIN")){
-					 %> 
+			<%
+			UserLogin user = (UserLogin) session.getAttribute("user");
+			if (user != null && user.getRole().equals("ADMIN")) {
+			%>
 			<li><a href="UserServlet"> <i class='bx bx-box'></i> <span
 					class="links_name">User</span>
 			</a></li>
@@ -566,9 +565,11 @@ nav .profile-details i {
 			<li><a href="#"> <i class='bx bx-cog'></i> <span
 					class="links_name">Setting</span>
 			</a></li>
-			<% } %>
-			<li class="log_out"><a href="HomeServlet"> <i class='bx bx-log-out'></i>
-					<span class="links_name">Log out</span>
+			<%
+			}
+			%>
+			<li class="log_out"><a href="HomeServlet"> <i
+					class='bx bx-log-out'></i> <span class="links_name">Log out</span>
 			</a></li>
 		</ul>
 	</div>
@@ -577,17 +578,15 @@ nav .profile-details i {
 			<div class="sidebar-button">
 				<i class='bx bx-menu sidebarBtn'></i> <span class="dashboard">Dashboard</span>
 			</div>
-			<div class="search-box">
-				<input type="text" placeholder="Search..."> <i
-					class='bx bx-search'></i>
-			</div>
 			<div class="profile-details">
 				<img
 					src="https://fit.hcmute.edu.vn/Resources/Images/SubDomain/fit/logo-cntt2021.png"
-					alt=""> <span class="admin_name"> <%
+					alt=""> <span class="admin_name" style="margin-left: 30px">
+					<%
 					UserLogin username = (UserLogin) session.getAttribute("user");
-					out.println(username.getUsername());
-					 %> 
+					if (username != null)
+						out.println(username.getUsername());
+					%>
 				</span> <i class='bx bx-chevron-down'></i>
 			</div>
 		</nav>

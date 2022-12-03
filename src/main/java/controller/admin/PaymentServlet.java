@@ -91,7 +91,7 @@ public class PaymentServlet extends HttpServlet {
 		else if (actionString.equalsIgnoreCase("delete"))
 			doPost_Delete(request, response);
 		else if (actionString.equalsIgnoreCase("update")) {
-			// doPost_Update(request, response);
+			//doPost_Update(request, response);
 		}
 		doGet(request, response);
 	}
@@ -102,6 +102,7 @@ public class PaymentServlet extends HttpServlet {
 		String paymentOption = (String) request.getParameter("paymentOption");
 		String hotelId = (String) request.getParameter("hotel");
 		String description = (String) request.getParameter("description");
+		String user = (String) request.getParameter("userPayment");
 
 		Hotel hotel = hotelDAO.get(Integer.parseInt(hotelId));
 
@@ -112,7 +113,10 @@ public class PaymentServlet extends HttpServlet {
 		payment.setDescription(description);
 
 		payment.setHotel(hotel);
-		payment.setUserPayment(null);// tạm thời
+		payment.setUserPayment(user);// tạm thời
+		
+		hotel.setActivate(true);
+		hotelDAO.saveOrUpdate(hotel);
 
 		paymentDAO.save(payment);
 	}

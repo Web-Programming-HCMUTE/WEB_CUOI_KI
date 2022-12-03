@@ -25,6 +25,18 @@ public class HotelDAO extends JpaEntityManager implements IHotelDAO {
 		return super.get(Hotel.class, id);
 		
 	}
+	
+	public List<Hotel> getByUser(String username){
+		Transaction trans = getCurentSession().beginTransaction();
+		String sql = "From Hotel h where h.user.name=:username";
+		Query query = getCurentSession().createQuery(sql);
+		
+		query.setParameter("username",username);
+		List<Hotel> hotels = query.getResultList();
+		trans.commit();
+		return hotels;
+		
+	}
 
 	public List<Hotel> getByName(String name, String room, String price) {
 		Transaction trans = getCurentSession().beginTransaction();

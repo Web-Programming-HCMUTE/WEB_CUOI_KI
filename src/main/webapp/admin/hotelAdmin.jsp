@@ -288,57 +288,91 @@ table.table .avatar {
 }
 </style>
 <script>
-	$(document).ready(function() {
-		// Activate tooltip
-		$('[data-toggle="tooltip"]').tooltip();
+	$(document)
+			.ready(
+					function() {
+						// Activate tooltip
+						$('[data-toggle="tooltip"]').tooltip();
 
-		$('table .delete').on('click', function() {
-			var id = $(this).parent().find('#id').val();
-			$('#deleteEmployeeModal #id').val(id);
-		})
+						$('table .delete').on('click', function() {
+							var id = $(this).parent().find('#id').val();
+							$('#deleteEmployeeModal #id').val(id);
+						})
 
-		$('table .edit').on('click', function() {
-			var id = $(this).parent().find('#id').val();
-			$.ajax({
-				type: "GET",
-				url: '${pageContext.request.contextPath }/HotelAdminServlet',
-				data: {action: 'find', id: id},
-				dataType: 'json',
-				contentType: 'application/json',
-				success: function(result) {
-					$('#editEmployeeModal #id').val(result.id);
-					$('#editEmployeeModal #title').val(result.content);
-					$('#editEmployeeModal #image').val(result.image);
-					$('#editEmployeeModal #area').val(result.hotelDetail.area);
-					$('#editEmployeeModal #address').val(result.hotelDetail.address);
-					$('#editEmployeeModal #numberRoom').val(result.hotelDetail.numberRoom);
-					$('#editEmployeeModal #price').val(result.hotelDetail.price);
-					$('#editEmployeeModal #desc').val(result.hotelDetail.description);
-				}
-				
-				
-			})
-		})
+						$('table .edit')
+								.on(
+										'click',
+										function() {
+											var id = $(this).parent().find(
+													'#id').val();
+											$
+													.ajax({
+														type : "GET",
+														url : '${pageContext.request.contextPath }/HotelAdminServlet',
+														data : {
+															action : 'find',
+															id : id
+														},
+														dataType : 'json',
+														contentType : 'application/json',
+														success : function(
+																result) {
+															$(
+																	'#editEmployeeModal #id')
+																	.val(
+																			result.id);
+															$(
+																	'#editEmployeeModal #title')
+																	.val(
+																			result.content);
+															$(
+																	'#editEmployeeModal #image')
+																	.val(
+																			result.image);
+															$(
+																	'#editEmployeeModal #area')
+																	.val(
+																			result.hotelDetail.area);
+															$(
+																	'#editEmployeeModal #address')
+																	.val(
+																			result.hotelDetail.address);
+															$(
+																	'#editEmployeeModal #numberRoom')
+																	.val(
+																			result.hotelDetail.numberRoom);
+															$(
+																	'#editEmployeeModal #price')
+																	.val(
+																			result.hotelDetail.price);
+															$(
+																	'#editEmployeeModal #desc')
+																	.val(
+																			result.hotelDetail.description);
+														}
 
-		// Select/Deselect checkboxes
-		var checkbox = $('table tbody input[type="checkbox"]');
-		$("#selectAll").click(function() {
-			if (this.checked) {
-				checkbox.each(function() {
-					this.checked = true;
-				});
-			} else {
-				checkbox.each(function() {
-					this.checked = false;
-				});
-			}
-		});
-		checkbox.click(function() {
-			if (!this.checked) {
-				$("#selectAll").prop("checked", false);
-			}
-		});
-	});
+													})
+										})
+
+						// Select/Deselect checkboxes
+						var checkbox = $('table tbody input[type="checkbox"]');
+						$("#selectAll").click(function() {
+							if (this.checked) {
+								checkbox.each(function() {
+									this.checked = true;
+								});
+							} else {
+								checkbox.each(function() {
+									this.checked = false;
+								});
+							}
+						});
+						checkbox.click(function() {
+							if (!this.checked) {
+								$("#selectAll").prop("checked", false);
+							}
+						});
+					});
 </script>
 </head>
 <body>
@@ -370,6 +404,7 @@ table.table .avatar {
 							<th>Address</th>
 							<th>Number Room</th>
 							<th>Price</th>
+							<th>Active</th>
 						</tr>
 					</thead>
 					<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -382,25 +417,41 @@ table.table .avatar {
 								</span></td>
 								<td>${hotel.id }</td>
 								<td>${hotel.content }</td>
-								<td>
-									<img src="${hotel.image }" height="100px" width="100px"></img>
+								<td><img src="${hotel.image }" height="100px" width="100px"></img>
 								</td>
 								<td>${hotel.hotelDetail.address }</td>
 								<td>${hotel.hotelDetail.numberRoom }</td>
 								<td>${hotel.hotelDetail.price }</td>
+								<td><c:if test="${hotel.activate }">
+										<input class="form-check-input" type="checkbox" checked
+											disabled id="flexCheckDefault">
+									</c:if> <c:if test="${hotel.activate == false}">
+										<input class="form-check-input" type="checkbox" disabled
+											id="flexCheckDefault">
+									</c:if></td>
 								<td><a href="#editEmployeeModal" class="edit"
 									data-toggle="modal"><i class="material-icons"
 										data-toggle="tooltip" title="Edit">&#xE254;</i></a> <a
 									href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i
 										class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-									<input type='hidden' name='id' id='id' value='${hotel.id }'></input>
+
+									<%@ page import="model.UserLogin"%> <%
+									 UserLogin userauth = (UserLogin) session.getAttribute("user");
+									 if (userauth != null && userauth.getRole().equals("ADMIN")) {
+									 %>
+												<a href="${pageContext.request.contextPath }/HotelAdminServlet?action=active&id=${hotel.id }" class="edit"
+									data-toggle="modal"><i class="material-icons"
+										data-toggle="tooltip" title="Active">&#xe5ca;</i></a>					
+									 <% }
+									 %>
+  									<input type='hidden' name='id' id='id' value='${hotel.id }'></input>
 								</td>
 							</tr>
 
 						</tbody>
 					</c:forEach>
 				</table>
-				
+
 			</div>
 		</div>
 	</div>
@@ -480,19 +531,21 @@ table.table .avatar {
 						</div>
 						<div class="form-group">
 							<label>Address</label>
-							<textarea name="address" class="form-control" required  id="address"></textarea>
+							<textarea name="address" class="form-control" required
+								id="address"></textarea>
 						</div>
 						<div class="form-group">
-							<label>Number Room</label> <input type="text" name="numberRoom"  id="numberRoom"
-								class="form-control" required>
+							<label>Number Room</label> <input type="text" name="numberRoom"
+								id="numberRoom" class="form-control" required>
 						</div>
 						<div class="form-group">
-							<label>Price</label> <input type="number" name="price"  id="price"
+							<label>Price</label> <input type="number" name="price" id="price"
 								class="form-control" required>
 						</div>
+
 						<div class="form-group">
 							<label>Description</label>
-							<textarea name="desc" class="form-control" required  id="desc"></textarea>
+							<textarea name="desc" class="form-control" required id="desc"></textarea>
 						</div>
 					</div>
 					<div class="modal-footer">
