@@ -134,9 +134,11 @@ public class HotelAdminServlet extends HttpServlet {
 		int id = Integer.parseInt(request.getParameter("id"));
 		
 		Hotel hotel = postDAO.get(Hotel.class, id);
+		
 		HotelDetail hotelDetail = hotelDetailDAO.get(HotelDetail.class, (hotel.getHotelDetail().getId())); 
-		postDAO.delete(hotel);
+
 		hotelDetailDAO.delete(hotelDetail);
+		postDAO.delete(hotel);
 
 	}
 	
@@ -190,15 +192,12 @@ public class HotelAdminServlet extends HttpServlet {
 		Hotel hotel = postDAO.get(id);
 		hotel.setContent(request.getParameter("content"));
 		hotel.setImage(request.getParameter("image"));
-		String[] check = request.getParameterValues("active");
-		if(check != null)
-			hotel.setActivate(Boolean.parseBoolean(check[0]));
 		
 		HotelDetail hotelDetail = hotelDetailDAO.get(HotelDetail.class, hotel.getHotelDetail().getId());
-		hotelDetail.setArea(Integer.parseInt(request.getParameter("area")));
-		hotelDetail.setNumberRoom(Integer.parseInt(request.getParameter("numberRoom")));
+		hotelDetail.setArea(Integer.parseInt(request.getParameter("area").trim()));
+		hotelDetail.setNumberRoom(Integer.parseInt(request.getParameter("numberRoom").trim()));
 		hotelDetail.setAddress(request.getParameter("address"));
-		hotelDetail.setPrice(BigDecimal.valueOf(Double.parseDouble(request.getParameter("price"))));
+		hotelDetail.setPrice(BigDecimal.valueOf(Double.parseDouble(request.getParameter("price").trim())));
 		hotelDetail.setDesc(request.getParameter("desc"));
 
 		postDAO.saveOrUpdate(hotel);

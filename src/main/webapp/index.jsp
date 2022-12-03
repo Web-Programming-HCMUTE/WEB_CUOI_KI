@@ -123,7 +123,8 @@
 								<p>Giá: ${hotel.hotelDetail.price } VNĐ</p>
 								<p style="height: 200px; display: block; text-align: justify;">
 									${hotel.hotelDetail.description }</p>
-								</a>
+								
+								<a href="RoomServlet?id=${hotel.id }" class="book_now">Xem ngay</a>
 										
 							</div>
 						</div>

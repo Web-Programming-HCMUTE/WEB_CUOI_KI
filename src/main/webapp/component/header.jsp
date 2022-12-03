@@ -24,11 +24,6 @@
 								<jsp:include page="./search.jsp"></jsp:include>
 
 							</div>
-							<div class="book_btn d-none d-lg-block">
-								<a href="#addBooking" class="btn btn-success"
-								data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add
-									New Hotel</span></a>
-							</div>
 							<div>
 							<%@ page import="model.UserLogin" %>
 								<%

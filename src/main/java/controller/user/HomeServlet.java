@@ -41,7 +41,7 @@ public class HomeServlet extends HttpServlet {
 			request.setAttribute("user", username);
 		}
 			
-		request.setAttribute("hotels", hotelDAO.getAll());
+		request.setAttribute("hotels", hotelDAO.getAllHotelActive());
 		request.getRequestDispatcher("./index.jsp").forward(request, response);
 	}
 

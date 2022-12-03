@@ -38,6 +38,10 @@
 }
 </style>
 
+	<%@ page import="model.UserLogin"%>
+	<%
+	UserLogin userauth = (UserLogin) session.getAttribute("user");
+	%>
 	<jsp:include page="./component/header.jsp"></jsp:include>
 	<!-- bradcam_area_start -->
 	<!-- bradcam_area_end -->
@@ -128,7 +132,7 @@
 					<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 					<div class="comments-area">
-						<h4>05 Comments</h4>
+						<h4>Comments</h4>
 						<c:forEach items="${hotel.comment}" var="comment">
 							<div class="comment-list">
 								<div class="single-comment justify-content-between d-flex">
@@ -163,9 +167,7 @@
 							</div>
 						</c:forEach>
 					</div>
-					<%@ page import="model.UserLogin"%>
 					<%
-					UserLogin userauth = (UserLogin) session.getAttribute("user");
 					if (userauth == null) {
 					%>
 					<div class="comment-form">
@@ -203,12 +205,30 @@
 				</div>
 				<div class="col-lg-4">
 					<div class="blog_right_sidebar">
+						<%
+						if (userauth != null) {
+						%>
 						<aside class="single_sidebar_widget search_widget">
-							<a href="#addBooking" class="btn btn-success" data-toggle="modal"><i
-								class="material-icons">&#xE147;</i> <span>Add New Hotel</span></a>
+							<a href="#addBooking" style="height: 45px;"
+								class="btn rounded-0 btn-primary w-100" data-toggle="modal">
+								<span style="color: white; font-size: 22px; font-weight: 500">Đặt
+									hẹn</span>
+							</a>
 						</aside>
 
-
+						<%
+						} else {
+						%>
+						<aside class="single_sidebar_widget search_widget">
+							<a href="login.jsp" style="height: 45px;"
+								class="btn rounded-0 btn-primary w-100" >
+								<span style="color: white; font-size: 22px; font-weight: 500">Đặt
+									hẹn</span>
+							</a>
+						</aside>
+						<%
+						}
+						%>
 						<aside class="single_sidebar_widget instagram_feeds">
 							<h4 class="widget_title">Instagram Feeds</h4>
 							<ul class="instagram_row flex-wrap">
@@ -338,52 +358,6 @@
 	<!-- link that opens popup -->
 
 	<!-- form itself end-->
-	<form id="test-form" class="white-popup-block mfp-hide">
-		<div class="popup_box">
-			<div class="popup_inner">
-				<h3>Check Availability</h3>
-				<form action="#">
-					<div class="row">
-						<div class="col-xl-6">
-							<input id="datepicker" placeholder="Check in date" />
-						</div>
-						<div class="col-xl-6">
-							<input id="datepicker2" placeholder="Check out date" />
-						</div>
-						<div class="col-xl-6">
-							<select class="form-select wide" id="default-select" class="">
-								<option data-display="Adult">1</option>
-								<option value="1">2</option>
-								<option value="2">3</option>
-								<option value="3">4</option>
-							</select>
-						</div>
-						<div class="col-xl-6">
-							<select class="form-select wide" id="default-select" class="">
-								<option data-display="Children">1</option>
-								<option value="1">2</option>
-								<option value="2">3</option>
-								<option value="3">4</option>
-							</select>
-						</div>
-						<div class="col-xl-12">
-							<select class="form-select wide" id="default-select" class="">
-								<option data-display="Room type">Room type</option>
-								<option value="1">Laxaries Rooms</option>
-								<option value="2">Deluxe Room</option>
-								<option value="3">Signature Room</option>
-								<option value="4">Couple Room</option>
-							</select>
-						</div>
-						<div class="col-xl-12">
-							<button type="submit" class="boxed-btn3">Check
-								Availability</button>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
-	</form>
 	<!-- form itself end -->
 
 	<!-- Edit Modal HTML -->
@@ -399,26 +373,19 @@
 					</div>
 					<div class="modal-body">
 						<div class="form-group">
-							<input id="datepicker" placeholder="Check in date" name="date" />
+							<input id="datepicker" placeholder="Check in date" name="date"/>
 						</div>
 					</div>
 
 					<div class="modal-body">
 						<div class="form-group">
-							<label>Mục đích</label> <input type="text" name="purpose"
+							<label>Nội dung</label> <input type="text" name="purpose"
 								id="price" class="form-control" required>
 						</div>
 					</div>
 
-					<div class="modal-body">
-						<div class="form-group">
-							<label>Nội dung</label>
-							<textarea type="text" name="content" id="price"
-								class="form-control" required></textarea>
-						</div>
-					</div>
 
-					<input type='text' name='id' id='id' value="${hotel.id }"></input>
+					<input type="hidden" name='id' id='id' value="${hotel.id }"></input>
 
 					<div class="modal-footer">
 						<input type="button" class="btn btn-default" data-dismiss="modal"

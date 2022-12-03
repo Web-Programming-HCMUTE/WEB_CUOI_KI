@@ -128,7 +128,6 @@ public class AppointmentServlet extends HttpServlet {
 		}
 		String date = request.getParameter("date");
 		String purpose = (String) request.getParameter("purpose");
-		String content = (String) request.getParameter("content");
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		Date submitDate = sdf.parse(date);
 		Appointment appointment = new Appointment();
