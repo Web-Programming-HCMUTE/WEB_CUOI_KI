@@ -25,7 +25,9 @@
 
 							</div>
 							<div class="book_btn d-none d-lg-block">
-								<jsp:include page="booking.jsp"></jsp:include>
+								<a href="#addBooking" class="btn btn-success"
+								data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add
+									New Hotel</span></a>
 							</div>
 							<div>
 							<%@ page import="model.UserLogin" %>
@@ -57,39 +59,14 @@
 		</div>
 	</div>
 	
-	<!-- form itself end-->
-	<form id="test-form" class="white-popup-block mfp-hide">
-		<div class="popup_box">
-			<div class="popup_inner">
-				<h4 class="mb-4">Đặt lịch hẹn</h4>
-				<form action="${pageContext.request.contextPath }/AppointmentServlet?action=create" >
-					<div class="row">
-						<div class="col-xl-12">
-							<input id="datepicker" placeholder="Check in date" name="date" />
-						</div>
-						<div class="col-xl-12">
-							<label>Mục đích</label> <input type="text" name="purpose" id="price"
-								class="form-control" required>
-						</div>
-						<div class="col-xl-12">
-							<label>Nội dung</label> <textarea type="text" name="content" id="price"
-								class="form-control" required ></textarea>
-						</div>
-						<div class="col-xl-12  mt-3">
-							<button type="submit" class="boxed-btn3">
-								Đặt hẹn</button>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
-	</form>
-	<!-- form itself end -->
-	
-	<style>
-.btn-custom {
-	
-}
-</style>
 </header>
 <!-- header-end -->
+
+
+	<style>
+	.modal-backdrop.show{
+	display: none!important;
+	}
+	
+	
+	</style>

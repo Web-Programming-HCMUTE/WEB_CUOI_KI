@@ -166,11 +166,15 @@
 					<%@ page import="model.UserLogin"%>
 					<%
 					UserLogin userauth = (UserLogin) session.getAttribute("user");
-					if (userauth == null) { %>
-						<div class="comment-form"> 
-							<h4>Hãy đăng nhập để viết bình luận <a href="./login.jsp">Login</a> </h4>
-						</div>
-					<% } else {
+					if (userauth == null) {
+					%>
+					<div class="comment-form">
+						<h4>
+							Hãy đăng nhập để viết bình luận <a href="./login.jsp">Login</a>
+						</h4>
+					</div>
+					<%
+					} else {
 					%>
 					<div class="comment-form">
 						<h4>Leave a Reply</h4>
@@ -193,28 +197,15 @@
 							</div>
 						</form>
 					</div>
-				<%} %>
+					<%
+					}
+					%>
 				</div>
 				<div class="col-lg-4">
 					<div class="blog_right_sidebar">
 						<aside class="single_sidebar_widget search_widget">
-							<form action="#">
-								<div class="form-group">
-									<div class="input-group mb-3">
-										<input type="text" name="content" class="form-control"
-											placeholder='Search Keyword' onfocus="this.placeholder = ''"
-											onblur="this.placeholder = 'Search Keyword'">
-										<div class="input-group-append">
-											<button class="btn" type="button">
-												<i class="ti-search"></i>
-											</button>
-										</div>
-									</div>
-								</div>
-								<button
-									class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
-									type="submit">Search</button>
-							</form>
+							<a href="#addBooking" class="btn btn-success" data-toggle="modal"><i
+								class="material-icons">&#xE147;</i> <span>Add New Hotel</span></a>
 						</aside>
 
 
@@ -393,6 +384,52 @@
 			</div>
 		</div>
 	</form>
+	<!-- form itself end -->
+
+	<!-- Edit Modal HTML -->
+	<div id="addBooking" class="modal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<form method="POST"
+					action='${pageContext.request.contextPath }/AppointmentServlet?action=create'>
+					<div class="modal-header">
+						<h4 class="modal-title">Add Hotel</h4>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<input id="datepicker" placeholder="Check in date" name="date" />
+						</div>
+					</div>
+
+					<div class="modal-body">
+						<div class="form-group">
+							<label>Mục đích</label> <input type="text" name="purpose"
+								id="price" class="form-control" required>
+						</div>
+					</div>
+
+					<div class="modal-body">
+						<div class="form-group">
+							<label>Nội dung</label>
+							<textarea type="text" name="content" id="price"
+								class="form-control" required></textarea>
+						</div>
+					</div>
+
+					<input type='text' name='id' id='id' value="${hotel.id }"></input>
+
+					<div class="modal-footer">
+						<input type="button" class="btn btn-default" data-dismiss="modal"
+							value="Hủy"> <input type="submit" class="btn btn-success"
+							value="Đặt hẹn">
+
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 	<!-- form itself end -->
 
 

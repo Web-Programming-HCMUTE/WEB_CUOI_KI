@@ -545,15 +545,15 @@ nav .profile-details i {
 			<li><a href="HotelAdminServlet" class="active"> <i
 					class='bx bx-grid-alt'></i> <span class="links_name">Hotel</span>
 			</a></li>
+			<li><a href="AppointmentServlet"> <i class='bx bx-list-ul'></i> <span
+					class="links_name">Booking</span>
+			</a></li>
 			<%
 			UserLogin user = (UserLogin) session.getAttribute("user");
 			if (user != null && user.getRole().equals("ADMIN")) {
 			%>
 			<li><a href="UserServlet"> <i class='bx bx-box'></i> <span
 					class="links_name">User</span>
-			</a></li>
-			<li><a href="#"> <i class='bx bx-list-ul'></i> <span
-					class="links_name">Booking</span>
 			</a></li>
 			<li><a href="PaymentServlet"> <i
 					class='bx bx-pie-chart-alt-2'></i> <span class="links_name">Payment</span>

@@ -32,7 +32,6 @@ public class User implements Serializable{
 	
 	private String phone;
 	
-	
 	@OneToOne
 	private UserLogin userLogin;
 	

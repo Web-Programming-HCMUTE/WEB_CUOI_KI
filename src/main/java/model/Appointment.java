@@ -5,6 +5,7 @@ package model;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,7 +22,7 @@ public class Appointment {
 	
 	private Date appointmentDate;
 	
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	private User userDatLich;
 	
 	private String purpose;
@@ -29,7 +30,7 @@ public class Appointment {
 	private String status;
 	
 	// có nhiều book cho 1 nhà trọ
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Hotel hotel;
 
 	public int getId() {

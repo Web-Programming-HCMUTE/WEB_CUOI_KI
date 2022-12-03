@@ -26,11 +26,22 @@
 <link rel="stylesheet" href="./css/slicknav.css" />
 <link rel="stylesheet" href="./css/style.css" />
 <link rel="stylesheet" href="./_style.css" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <!-- <link rel="stylesheet" href="css/responsive.css"> -->
 </head>
 
 <body>
-<jsp:include page="./component/header.jsp"></jsp:include>
+	<script>
+		$("a #addBok").on('click', function() {
+			console.log(1)
+			var id = $(this).parent().find('#id').val();
+			console.log(id)
+			$('#addBooking #id').val(id);
+			
+		})
+	</script>
+	<jsp:include page="./component/header.jsp"></jsp:include>
 
 	<!-- slider_area_start -->
 	<div class="slider_area">
@@ -100,8 +111,7 @@
 			<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 			<div class="row">
-				<c:forEach items="${hotels}" begin="1" end="3" step="1"
-					var="hotel">
+				<c:forEach items="${hotels}" begin="1" end="3" step="1" var="hotel">
 					<a href="RoomServlet?id=${hotel.id }">
 						<div class="col-xl-4 col-md-4 my-3">
 							<div class="single_offers">
@@ -113,7 +123,8 @@
 								<p>Giá: ${hotel.hotelDetail.price } VNĐ</p>
 								<p style="height: 200px; display: block; text-align: justify;">
 									${hotel.hotelDetail.description }</p>
-									<jsp:include page="./component/booking.jsp"></jsp:include>
+								</a>
+										
 							</div>
 						</div>
 					</a>
@@ -313,44 +324,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="copy-right_text">
-			<div class="container">
-				<div class="footer_border"></div>
-				<div class="row">
-					<div class="col-xl-8 col-md-7 col-lg-9">
-						<p class="copy_right">
-							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-							Copyright &copy;
-							<script>
-								document.write(new Date().getFullYear());
-							</script>
-							All rights reserved | This template is made with <i
-								class="fa fa-heart-o" aria-hidden="true"></i> by <a
-								href="https://colorlib.com" target="_blank">Colorlib</a>
-							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-						</p>
-					</div>
 
-					<div class="col-xl-4 col-md-5 col-lg-3">
-						<div class="socail_links">
-							<ul>
-								<li><a href="#"> <i class="fa fa-facebook-square"></i>
-								</a></li>
-								<li><a href="#"> <i class="fa fa-twitter"></i>
-								</a></li>
-								<li><a href="#"> <i class="fa fa-instagram"></i>
-								</a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
 	</footer>
 
 	<!-- link that opens popup -->
 
-	
+
 
 	<!-- JS here -->
 	<script src="./js/vendor/modernizr-3.5.0.min.js"></script>
