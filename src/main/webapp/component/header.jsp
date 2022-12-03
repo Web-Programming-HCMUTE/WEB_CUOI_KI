@@ -21,11 +21,11 @@
 						<div class="book_room">
 							<div class="socail_links">
 
-								<jsp:include page="./component/search.jsp"></jsp:include>
+								<jsp:include page="./search.jsp"></jsp:include>
 
 							</div>
 							<div class="book_btn d-none d-lg-block">
-								<a class="popup-with-form" href="#test-form">Đặt phòng</a>
+								<jsp:include page="booking.jsp"></jsp:include>
 							</div>
 							<div>
 							<%@ page import="model.UserLogin" %>
@@ -56,6 +56,36 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- form itself end-->
+	<form id="test-form" class="white-popup-block mfp-hide">
+		<div class="popup_box">
+			<div class="popup_inner">
+				<h4 class="mb-4">Đặt lịch hẹn</h4>
+				<form action="${pageContext.request.contextPath }/AppointmentServlet?action=create" >
+					<div class="row">
+						<div class="col-xl-12">
+							<input id="datepicker" placeholder="Check in date" name="date" />
+						</div>
+						<div class="col-xl-12">
+							<label>Mục đích</label> <input type="text" name="purpose" id="price"
+								class="form-control" required>
+						</div>
+						<div class="col-xl-12">
+							<label>Nội dung</label> <textarea type="text" name="content" id="price"
+								class="form-control" required ></textarea>
+						</div>
+						<div class="col-xl-12  mt-3">
+							<button type="submit" class="boxed-btn3">
+								Đặt hẹn</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</form>
+	<!-- form itself end -->
+	
 	<style>
 .btn-custom {
 	

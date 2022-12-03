@@ -38,8 +38,7 @@
 }
 </style>
 
-	<jsp:include page="header.jsp"></jsp:include>
-
+	<jsp:include page="./component/header.jsp"></jsp:include>
 	<!-- bradcam_area_start -->
 	<!-- bradcam_area_end -->
 

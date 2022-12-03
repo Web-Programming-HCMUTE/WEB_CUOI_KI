@@ -14,9 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
-import dao.IBookDetailDAO;
 import dao.JpaEntityManager;
-import dao.Impl.BookDetailDAO;
 import dao.Impl.HotelDAO;
 import dao.Impl.HotelDetailDAO;
 import dao.Impl.UserDAO;
@@ -33,7 +31,6 @@ import model.Hotel;
 public class HotelAdminServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private BookDetailDAO bookDetailDAO = new BookDetailDAO();
 	private HotelDAO postDAO = new HotelDAO();
 	private HotelDetailDAO hotelDetailDAO = new HotelDetailDAO();
 	private UserDAO userDAO = new UserDAO();

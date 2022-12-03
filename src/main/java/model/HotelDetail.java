@@ -36,10 +36,6 @@ public class HotelDetail implements Serializable {
 	@Column(name="description", columnDefinition="TEXT")
 	private String description;
 
-	// 1 nhà trọ có nhiều người đặt lịch
-	@OneToMany
-	private List<BookDetail> bookDetail;
-
 	public int getId() {
 		return id;
 	}
@@ -97,12 +93,5 @@ public class HotelDetail implements Serializable {
 		this.description = description;
 	}
 
-	public List<BookDetail> getBookDetail() {
-		return bookDetail;
-	}
-
-	public void setBookDetail(List<BookDetail> bookDetail) {
-		this.bookDetail = bookDetail;
-	}
 
 }
