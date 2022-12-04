@@ -35,6 +35,12 @@ public class UserLoginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		String action = request.getParameter("action");
+		if(null != action && action.equalsIgnoreCase("logout")) {
+			request.getSession().removeAttribute("user");
+			response.sendRedirect("HomeServlet");
+			return;
+		} 
 		request.getRequestDispatcher("./login.jsp").forward(request, response);
 	}
 
@@ -83,6 +89,13 @@ public class UserLoginServlet extends HttpServlet {
 		userlogin.setUsername(username);
 		userlogin.setPassword(password);
 		userlogin.setRole("USER");
+		
+		User userCheck = userDAO.getByName(username);
+		if(userCheck != null) {
+			request.setAttribute("message", "Đã tồn tại username này");
+			request.getRequestDispatcher("./register.jsp").forward(request, response);
+			return;
+		}
 
 		userDAO.saveUserAndUserLogin(user, userlogin);
 		

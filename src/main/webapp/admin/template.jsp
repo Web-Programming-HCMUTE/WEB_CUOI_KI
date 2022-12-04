@@ -558,13 +558,7 @@ nav .profile-details i {
 			<li><a href="PaymentServlet"> <i
 					class='bx bx-pie-chart-alt-2'></i> <span class="links_name">Payment</span>
 			</a></li>
-			<li><a href="#"> <i class='bx bx-coin-stack'></i> <span
-					class="links_name">Report</span>
-			</a></li>
 
-			<li><a href="#"> <i class='bx bx-cog'></i> <span
-					class="links_name">Setting</span>
-			</a></li>
 			<%
 			}
 			%>

@@ -29,15 +29,26 @@ public class JpaEntityManager {
 
 	public <T> T save(final T o) {
 		Transaction trans = getCurentSession().beginTransaction();
-		final T res = (T) sessionFactory.getCurrentSession().save(o);
-		trans.commit();
-		return res;
+		try {
+			final T res = (T) sessionFactory.getCurrentSession().save(o);
+			trans.commit();
+			return res;
+		} catch (Exception e) {
+			// TODO: handle exception
+			trans.rollback();
+			return null;
+		}
 	}
 
 	public void delete(final Object object) {
 		Transaction trans = getCurentSession().beginTransaction();
-		sessionFactory.getCurrentSession().delete(object);
-		trans.commit();
+		try {
+			sessionFactory.getCurrentSession().delete(object);
+			trans.commit();
+		} catch (Exception e) {
+			// TODO: handle exception
+			trans.rollback();
+		}
 	}
 
 	/***/
@@ -59,8 +70,13 @@ public class JpaEntityManager {
 	/***/
 	public <T> void saveOrUpdate(final T o) {
 		Transaction trans = getCurentSession().beginTransaction();
-		sessionFactory.getCurrentSession().saveOrUpdate(o);
-		trans.commit();
+		try {
+			sessionFactory.getCurrentSession().saveOrUpdate(o);
+			trans.commit();
+		} catch (Exception e) {
+			// TODO: handle exception
+			trans.rollback();
+		}
 	}
 
 	public <T> List<T> getAll(final Class<T> type) {

@@ -54,11 +54,7 @@
 							<article class="blog_item">
 								<div class="blog_item_img">
 									<img class="card-img rounded-0" src="${hotel[0].image }" alt=""
-										height="250" style="object-fit: cover"> <a href="#"
-										class="blog_item_date">
-										<h3>${hotel[0].createDate.day }</h3>
-										<p>/${hotel[0].createDate.month }</p>
-									</a>
+										height="250" style="object-fit: cover">
 								</div>
 
 								<div class="blog_details">

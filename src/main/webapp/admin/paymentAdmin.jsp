@@ -496,7 +496,7 @@ table.table .avatar {
 					</div>
 					<div class="modal-body">
 						<div class="form-group">
-							<label>paymentPrice</label> <input type="text" id="paymentPrice"
+							<label>paymentPrice</label> <input type="number" id="paymentPrice"
 								name="paymentPrice" class="form-control" required>
 						</div>
 						<div class="form-group">

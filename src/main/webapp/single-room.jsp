@@ -53,7 +53,7 @@
 				<div class="col-lg-8 posts-list">
 					<div class="single-post">
 						<div class="feature-img">
-							<img class="img-custom" src="${hotel.image}" alt="">
+							<img class="img-custom" src="${hotel.image}" alt="" width="100%">
 						</div>
 						<div class="blog_details">
 							<h2>${hotel.content}</h2>
@@ -145,10 +145,9 @@
 												style="color: black; font-weight: 500; font-size: 18px;">
 												${comment.content }</p>
 											<div class="d-flex justify-content-around">
-												<div class="d-flex align-items-center">
-													<h5>
-														<a href="#"> ${comment.user.userLogin.username }</a>
-													</h5>
+												<div class="d-flex">
+													<h5 class="pt-1 mr-2">
+														${comment.user.userLogin.username }</h5>
 													<fmt:formatDate value="${ comment.commentDate}"
 														pattern="dd/MM/yyyy" var="newdatevar" />
 													<p>
@@ -221,8 +220,8 @@
 						%>
 						<aside class="single_sidebar_widget search_widget">
 							<a href="login.jsp" style="height: 45px;"
-								class="btn rounded-0 btn-primary w-100" >
-								<span style="color: white; font-size: 22px; font-weight: 500">Đặt
+								class="btn rounded-0 btn-primary w-100"> <span
+								style="color: white; font-size: 22px; font-weight: 500">Đặt
 									hẹn</span>
 							</a>
 						</aside>
@@ -373,14 +372,17 @@
 					</div>
 					<div class="modal-body">
 						<div class="form-group">
-							<input id="datepicker" placeholder="Check in date" name="date"/>
+							<input id="datepicker" placeholder="Check in date" name="date" />
 						</div>
 					</div>
 
 					<div class="modal-body">
 						<div class="form-group">
-							<label>Nội dung</label> <input type="text" name="purpose"
-								id="price" class="form-control" required>
+							<select class="form-select" aria-label="Default select example" name="purpose">
+								<option selected>Nội dung</option>
+								<option value="Đặt lịch hẹn">Đặt lịch hẹn</option>
+								<option value="Yêu cầu gọi lại">Yêu cầu gọi lại</option>
+							</select>
 						</div>
 					</div>
 
