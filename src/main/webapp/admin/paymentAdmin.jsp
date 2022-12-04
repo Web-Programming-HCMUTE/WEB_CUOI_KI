@@ -509,30 +509,22 @@ table.table .avatar {
 								<option value="Tiền mặt">Tiền mặt</option>
 							</select>
 						</div>
-						<div class="form-group">
-							<select class="form-select" id="hotel"
-								style="width: 335px !important;"
-								aria-label="Default select example" name="hotel">
-								<c:forEach var="item" items="${hotels}">
-									<option value="${item.id}">${item.content}</option>
-								</c:forEach>
-							</select>
-						</div>
+
 						<div class="form-group">
 							<label>User Payment</label>
-							<input name="description" id="userPayment" name="userPayment"
+							<input id="userPayment" name="userPayment"
 								class="form-control" required></input>
 						</div>
 						<div class="form-group">
 							<label>Description</label>
-							<textarea id="description" name="desc"
+							<textarea id="description" name="description"
 								class="form-control" required></textarea>
 						</div>
 					</div>
 					<div class="modal-footer">
 						<input type="button" class="btn btn-default" data-dismiss="modal"
 							value="Cancel"> <input type="submit"
-							class="btn btn-success" value="Add">
+							class="btn btn-success" value="Add"> <input type='hidden' name='id' id='id'></input>
 					</div>
 				</form>
 			</div>

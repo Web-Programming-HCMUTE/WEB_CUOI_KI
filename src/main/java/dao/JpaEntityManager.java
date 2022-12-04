@@ -54,9 +54,15 @@ public class JpaEntityManager {
 	/***/
 	public <T> T get(final Class<T> type, final int id) {
 		Transaction trans = getCurentSession().beginTransaction();
-		T ts = sessionFactory.getCurrentSession().get(type, id);
-		trans.commit();
-		return ts;
+		try {
+			T ts = sessionFactory.getCurrentSession().get(type, id);
+			trans.commit();
+			return ts;
+		} catch (Exception e) {
+			// TODO: handle exception
+			trans.rollback();
+			return null;
+		}
 	}
 
 	/***/
@@ -80,12 +86,17 @@ public class JpaEntityManager {
 	}
 
 	public <T> List<T> getAll(final Class<T> type) {
-		EntityManager em = sessionFactory.createEntityManager();
-		CriteriaBuilder cBuilder = em.getCriteriaBuilder();
-		CriteriaQuery<T> ts = cBuilder.createQuery(type);
-		Root<T> root = ts.from(type);
-		CriteriaQuery<T> allCriteriaQuery = ts.select(root);
-		TypedQuery<T> alQuery = em.createQuery(allCriteriaQuery);
-		return alQuery.getResultList();
+		try {
+			EntityManager em = sessionFactory.createEntityManager();
+			CriteriaBuilder cBuilder = em.getCriteriaBuilder();
+			CriteriaQuery<T> ts = cBuilder.createQuery(type);
+			Root<T> root = ts.from(type);
+			CriteriaQuery<T> allCriteriaQuery = ts.select(root);
+			TypedQuery<T> alQuery = em.createQuery(allCriteriaQuery);
+			return alQuery.getResultList();
+		} catch (Exception e) {
+			// TODO: handle exception
+			return null;
+		}
 	}
 }

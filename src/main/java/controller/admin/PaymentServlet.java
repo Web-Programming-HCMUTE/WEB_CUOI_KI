@@ -44,16 +44,14 @@ public class PaymentServlet extends HttpServlet {
 		int id = Integer.parseInt(request.getParameter("id"));
 
 		Payment payment = paymentDAO.getPaymentById(id);
-		if (payment != null) {
+		payment.setHotel(null);
+		Gson gson = new Gson();
 
-			Gson gson = new Gson();
+		PrintWriter writer = response.getWriter();
+		writer.print(gson.toJson(payment));
 
-			PrintWriter writer = response.getWriter();
-			writer.print(gson.toJson(payment));
-
-			writer.flush();
-			writer.close();
-		}
+		writer.flush();
+		writer.close();
 	}
 
 	/**
@@ -91,7 +89,7 @@ public class PaymentServlet extends HttpServlet {
 		else if (actionString.equalsIgnoreCase("delete"))
 			doPost_Delete(request, response);
 		else if (actionString.equalsIgnoreCase("update")) {
-			//doPost_Update(request, response);
+			doPost_Update(request, response);
 		}
 		doGet(request, response);
 	}
@@ -114,11 +112,29 @@ public class PaymentServlet extends HttpServlet {
 
 		payment.setHotel(hotel);
 		payment.setUserPayment(user);// tạm thời
-		
+
 		hotel.setActivate(true);
 		hotelDAO.saveOrUpdate(hotel);
 
 		paymentDAO.save(payment);
+	}
+	
+	protected void doPost_Update(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String paymentPrice = (String) request.getParameter("paymentPrice");
+		String paymentOption = (String) request.getParameter("paymentOption");
+		String description = (String) request.getParameter("description");
+		String user = (String) request.getParameter("userPayment");
+		int id = Integer.parseInt(request.getParameter("id"));
+		
+		Payment payment = paymentDAO.getPaymentById(id);
+		if(payment != null) {
+			payment.setPaymentPrice(BigDecimal.valueOf(Double.parseDouble(paymentPrice)));
+			payment.setDescription(description);
+			payment.setPaymentOption(paymentOption);
+			payment.setUserPayment(user);
+			paymentDAO.saveOrUpdate(payment);
+		}
 	}
 
 	protected void doPost_Delete(HttpServletRequest request, HttpServletResponse response)
@@ -129,8 +145,8 @@ public class PaymentServlet extends HttpServlet {
 		Payment payment = paymentDAO.getPaymentById(id);
 		if (payment != null) {
 			Hotel hotel = hotelDAO.get(payment.getHotel().getId());
-			
-			if(hotel != null) {
+
+			if (hotel != null) {
 				hotel.setActivate(false);
 				hotelDAO.saveOrUpdate(hotel);
 			}
