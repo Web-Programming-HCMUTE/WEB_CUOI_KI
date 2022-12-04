@@ -392,6 +392,7 @@ table.table .avatar {
 						</div>
 					</div>
 				</div>
+				<h5 style="color: red">${message }</h5>
 				<table class="table table-striped table-hover">
 					<thead>
 						<tr>

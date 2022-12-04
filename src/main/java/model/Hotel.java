@@ -41,9 +41,6 @@ public class Hotel implements Serializable {
 	
 	private Boolean activate;
 	
-	@OneToOne(fetch = FetchType.LAZY)
-	private Payment payment;
-	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private User user;
 	
@@ -115,14 +112,6 @@ public class Hotel implements Serializable {
 
 	public void setActivate(Boolean activate) {
 		this.activate = activate;
-	}
-
-	public Payment getPayment() {
-		return payment;
-	}
-
-	public void setPayment(Payment payment) {
-		this.payment = payment;
 	}
 
 }

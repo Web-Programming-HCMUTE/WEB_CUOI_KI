@@ -128,6 +128,12 @@ public class PaymentServlet extends HttpServlet {
 
 		Payment payment = paymentDAO.getPaymentById(id);
 		if (payment != null) {
+			Hotel hotel = hotelDAO.get(payment.getHotel().getId());
+			
+			if(hotel != null) {
+				hotel.setActivate(false);
+				hotelDAO.saveOrUpdate(hotel);
+			}
 			paymentDAO.delete(payment);
 		}
 

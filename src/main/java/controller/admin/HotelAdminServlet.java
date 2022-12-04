@@ -137,6 +137,11 @@ public class HotelAdminServlet extends HttpServlet {
 
 		HotelDetail hotelDetail = hotelDetailDAO.get(HotelDetail.class, (hotel.getHotelDetail().getId()));
 		
+		if(hotel.getActivate() == true) {
+			request.setAttribute("message", "Nhà trọ đã thanh toán, không thể xóa");
+			return;
+		}
+		
 		postDAO.delete(hotel);
 		hotelDetailDAO.delete(hotelDetail);
 	}
