@@ -32,7 +32,7 @@
 					<div class="card-body p-4 p-sm-5">
 						<h5 class="card-title text-center mb-5 fw-light fs-5">Register</h5>
 						<form action="UserLoginServlet" method="post">
-
+							<h5 style="color: red">${message }</h5>
 							<div class="form-floating mb-3">
 								<input type="text" class="form-control" name="username"
 									id="floatingInputUsername" placeholder="myusername" required

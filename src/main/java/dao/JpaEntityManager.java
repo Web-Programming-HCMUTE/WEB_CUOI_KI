@@ -29,23 +29,40 @@ public class JpaEntityManager {
 
 	public <T> T save(final T o) {
 		Transaction trans = getCurentSession().beginTransaction();
-		final T res = (T) sessionFactory.getCurrentSession().save(o);
-		trans.commit();
-		return res;
+		try {
+			final T res = (T) sessionFactory.getCurrentSession().save(o);
+			trans.commit();
+			return res;
+		} catch (Exception e) {
+			// TODO: handle exception
+			trans.rollback();
+			return null;
+		}
 	}
 
 	public void delete(final Object object) {
 		Transaction trans = getCurentSession().beginTransaction();
-		sessionFactory.getCurrentSession().delete(object);
-		trans.commit();
+		try {
+			sessionFactory.getCurrentSession().delete(object);
+			trans.commit();
+		} catch (Exception e) {
+			// TODO: handle exception
+			trans.rollback();
+		}
 	}
 
 	/***/
 	public <T> T get(final Class<T> type, final int id) {
 		Transaction trans = getCurentSession().beginTransaction();
-		T ts = sessionFactory.getCurrentSession().get(type, id);
-		trans.commit();
-		return ts;
+		try {
+			T ts = sessionFactory.getCurrentSession().get(type, id);
+			trans.commit();
+			return ts;
+		} catch (Exception e) {
+			// TODO: handle exception
+			trans.rollback();
+			return null;
+		}
 	}
 
 	/***/
@@ -59,17 +76,27 @@ public class JpaEntityManager {
 	/***/
 	public <T> void saveOrUpdate(final T o) {
 		Transaction trans = getCurentSession().beginTransaction();
-		sessionFactory.getCurrentSession().saveOrUpdate(o);
-		trans.commit();
+		try {
+			sessionFactory.getCurrentSession().saveOrUpdate(o);
+			trans.commit();
+		} catch (Exception e) {
+			// TODO: handle exception
+			trans.rollback();
+		}
 	}
 
 	public <T> List<T> getAll(final Class<T> type) {
-		EntityManager em = sessionFactory.createEntityManager();
-		CriteriaBuilder cBuilder = em.getCriteriaBuilder();
-		CriteriaQuery<T> ts = cBuilder.createQuery(type);
-		Root<T> root = ts.from(type);
-		CriteriaQuery<T> allCriteriaQuery = ts.select(root);
-		TypedQuery<T> alQuery = em.createQuery(allCriteriaQuery);
-		return alQuery.getResultList();
+		try {
+			EntityManager em = sessionFactory.createEntityManager();
+			CriteriaBuilder cBuilder = em.getCriteriaBuilder();
+			CriteriaQuery<T> ts = cBuilder.createQuery(type);
+			Root<T> root = ts.from(type);
+			CriteriaQuery<T> allCriteriaQuery = ts.select(root);
+			TypedQuery<T> alQuery = em.createQuery(allCriteriaQuery);
+			return alQuery.getResultList();
+		} catch (Exception e) {
+			// TODO: handle exception
+			return null;
+		}
 	}
 }

@@ -35,7 +35,7 @@
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
         <![endif]-->
 
-	<jsp:include page="header.jsp"></jsp:include>
+	<jsp:include page="./component/header.jsp"></jsp:include>
 
 	<!-- bradcam_area_start -->
 	<div class="bradcam_area breadcam_bg">
@@ -54,11 +54,7 @@
 							<article class="blog_item">
 								<div class="blog_item_img">
 									<img class="card-img rounded-0" src="${hotel[0].image }" alt=""
-										height="250" style="object-fit: cover"> <a href="#"
-										class="blog_item_date">
-										<h3>${hotel[0].createDate.day }</h3>
-										<p>/${hotel[0].createDate.month }</p>
-									</a>
+										height="250" style="object-fit: cover">
 								</div>
 
 								<div class="blog_details">

@@ -35,6 +35,12 @@ public class UserLoginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		String action = request.getParameter("action");
+		if(null != action && action.equalsIgnoreCase("logout")) {
+			request.getSession().removeAttribute("user");
+			response.sendRedirect("HomeServlet");
+			return;
+		} 
 		request.getRequestDispatcher("./login.jsp").forward(request, response);
 	}
 
@@ -54,13 +60,12 @@ public class UserLoginServlet extends HttpServlet {
 	protected void doPost_Login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
+		UserLogin userLogin = userLoginDAO.checkLogin(username, password);
 		
-		if(userLoginDAO.checkLogin(username, password)) {
+		if(userLogin != null) {
 			HttpSession session = request.getSession(true);
-			session.setAttribute("user", username);
+			session.setAttribute("user", userLogin);
 			response.sendRedirect("HomeServlet");
-			
-			return;
 		}
 		else {
 			request.setAttribute("message", "Không tìm thấy tài khoản");
@@ -76,7 +81,7 @@ public class UserLoginServlet extends HttpServlet {
 		String password = (String) request.getParameter("password");
 
 		User user = new User();
-		user.setName(name);
+		user.setName(username);
 		user.setEmail(email);
 		user.setPhone(phone);
 
@@ -84,11 +89,17 @@ public class UserLoginServlet extends HttpServlet {
 		userlogin.setUsername(username);
 		userlogin.setPassword(password);
 		userlogin.setRole("USER");
+		
+		User userCheck = userDAO.getByName(username);
+		if(userCheck != null) {
+			request.setAttribute("message", "Đã tồn tại username này");
+			request.getRequestDispatcher("./register.jsp").forward(request, response);
+			return;
+		}
 
 		userDAO.saveUserAndUserLogin(user, userlogin);
 		
 		request.getRequestDispatcher("./login.jsp").forward(request, response);
 	
 	}
-
 }

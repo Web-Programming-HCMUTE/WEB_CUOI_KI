@@ -17,7 +17,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@AllArgsConstructor
 @Data
 @Table(name="user_hotel")
 public class User implements Serializable{
@@ -32,7 +31,6 @@ public class User implements Serializable{
 	private String email;
 	
 	private String phone;
-	
 	
 	@OneToOne
 	private UserLogin userLogin;

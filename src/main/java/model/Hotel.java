@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -23,7 +24,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@NamedQueries({ @NamedQuery(name = "findAll", query = "from Hotel p ") })
 @Entity
 @Table(name = "hotel")
 public class Hotel implements Serializable {
@@ -38,8 +38,13 @@ public class Hotel implements Serializable {
 
 	@Column(name="image", columnDefinition="TEXT")
 	private String image;
-
-	@OneToMany(fetch = FetchType.EAGER)
+	
+	private Boolean activate;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	private User user;
+	
+	@OneToMany(fetch = FetchType.LAZY)
 	private List<Comment> comment;
 
 	@OneToOne(fetch = FetchType.EAGER)
@@ -91,6 +96,22 @@ public class Hotel implements Serializable {
 
 	public void setHotelDetail(HotelDetail hotelDetail) {
 		this.hotelDetail = hotelDetail;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Boolean getActivate() {
+		return activate;
+	}
+
+	public void setActivate(Boolean activate) {
+		this.activate = activate;
 	}
 
 }

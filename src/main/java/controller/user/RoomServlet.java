@@ -18,6 +18,7 @@ import dao.Impl.UserDAO;
 import model.Comment;
 import model.Hotel;
 import model.User;
+import model.UserLogin;
 
 /**
  * Servlet implementation class RoomServlet
@@ -50,17 +51,23 @@ public class RoomServlet extends HttpServlet {
 
 		if (actionString != null && actionString.equalsIgnoreCase("delete-comment")) {
 			doPost_Delete_Comment(request, response);
-			request.setAttribute("hotel", hotelDAO.get(Integer.parseInt(id)));
-			request.getRequestDispatcher("./single-blog.jsp").forward(request, response);
+			Hotel hotel =  hotelDAO.get(Integer.parseInt(id));
+			hotel.getHotelDetail();
+			hotel.getComment();
+			request.setAttribute("hotel",hotel);
+			request.getRequestDispatcher("./single-room.jsp").forward(request, response);
 			return;
 		}
 		if (id != null) {
-			request.setAttribute("hotel", hotelDAO.get(Integer.parseInt(id)));
-			request.getRequestDispatcher("./single-blog.jsp").forward(request, response);
+			Hotel hotel =  hotelDAO.get(Integer.parseInt(id));
+			hotel.getHotelDetail();
+			hotel.getComment();
+			request.setAttribute("hotel",hotel);
+			request.getRequestDispatcher("./single-room.jsp").forward(request, response);
 			return;
 		}
 
-		request.setAttribute("hotels", hotelDAO.getAll());
+		request.setAttribute("hotels", hotelDAO.getAllHotelActive());
 		request.getRequestDispatcher("./rooms.jsp").forward(request, response);
 	}
 
@@ -70,6 +77,7 @@ public class RoomServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		// TODO Auto-generated method stub
 		String actionString = request.getParameter("action");
 		if (actionString.equalsIgnoreCase("create-comment"))
@@ -82,14 +90,14 @@ public class RoomServlet extends HttpServlet {
 			throws ServletException, IOException {
 		String id = request.getParameter("id");
 		HttpSession session = request.getSession(true);
-		String username = (String) session.getAttribute("user");
+		UserLogin userLogin = (UserLogin) session.getAttribute("user");
 		if (id != null) {
 			String content = request.getParameter("content");
 			Comment comment = new Comment();
 			comment.setContent(content);
 			comment.setCommentDate(new Date());
-			if(username != null) {
-				User user = userDAO.getByName(username);
+			if(userLogin != null) {
+				User user = userDAO.getByName(userLogin.getUsername());
 				comment.setUser(user); // tạm thời
 			}else {
 				comment.setUser(null); // tạm thời

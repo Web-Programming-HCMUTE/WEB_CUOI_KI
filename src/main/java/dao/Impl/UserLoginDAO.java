@@ -22,7 +22,7 @@ public class UserLoginDAO extends JpaEntityManager implements IUserLoginDAO {
 		return super.get(UserLogin.class, id);
 	}
 	
-	public boolean checkLogin(String username, String password) {
+	public UserLogin checkLogin(String username, String password) {
 		Transaction trans = getCurentSession().beginTransaction();
 		Query query = getCurentSession().createQuery("From UserLogin as u where u.username=:username and u.password=:password ");
 		query.setParameter("username",username);
@@ -32,8 +32,8 @@ public class UserLoginDAO extends JpaEntityManager implements IUserLoginDAO {
 		
 		trans.commit();
 		if(user != null && user.size() > 0)
-			return true;
-		return false;
+			return user.get(0);
+		return null;
 	}
 
 	@Override

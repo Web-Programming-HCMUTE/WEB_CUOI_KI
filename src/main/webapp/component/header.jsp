@@ -21,26 +21,36 @@
 						<div class="book_room">
 							<div class="socail_links">
 
-								<jsp:include page="./component/search.jsp"></jsp:include>
+								<jsp:include page="./search.jsp"></jsp:include>
 
 							</div>
-							<div class="book_btn d-none d-lg-block">
-								<a class="popup-with-form" href="#test-form">Đặt phòng</a>
-							</div>
 							<div>
+								<%@ page import="model.UserLogin"%>
 								<%
-								String username = (String) session.getAttribute("user");
-								if (username != null) {
+								UserLogin user = (UserLogin) session.getAttribute("user");
+								if (user != null) {
 								%>
-								<a href="HotelAdminServlet" style="height: 42px" class="mx-2 btn btn-primary btn-lg rounded-0"
-									role="button" aria-disabled="true">
-									<i class="bi bi-person-circle mx-1"></i>${ username}</a>
+
+								<div class="dropdown">
+									<button style="height: 42px" class=" ml-2 btn btn-primary dropdown-toggle rounded-0" type="button"
+										id="dropdownMenuButton" data-toggle="dropdown"
+										aria-haspopup="true" aria-expanded="false">
+										<%
+										out.println(user.getUsername());
+										%>
+									</button>
+									<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+										<a class="dropdown-item" href="HotelAdminServlet">Admin Page</a> <a
+											class="dropdown-item" href="UserLoginServlet?action=logout">Log out</a>
+									</div>
+								</div>
 
 								<%
 								} else {
 								%>
-								<a href="./login.jsp" style="height: 42px" class="mx-2 btn btn-primary btn-lg rounded-0"
-									role="button" aria-disabled="true">Login</a>
+								<a href="./login.jsp" style="height: 42px"
+									class="mx-2 btn btn-primary btn-lg rounded-0" role="button"
+									aria-disabled="true">Login</a>
 
 								<%
 								}
@@ -55,10 +65,13 @@
 			</div>
 		</div>
 	</div>
-	<style>
-.btn-custom {
-	
-}
-</style>
+
 </header>
 <!-- header-end -->
+
+
+<style>
+.modal-backdrop.show {
+	display: none !important;
+}
+</style>

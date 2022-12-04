@@ -288,81 +288,60 @@ table.table .avatar {
 }
 </style>
 <script>
-	$(document)
-			.ready(
-					function() {
-						// Activate tooltip
-						$('[data-toggle="tooltip"]').tooltip();
+	$(document).ready(
+			function() {
+				// Activate tooltip
+				$('[data-toggle="tooltip"]').tooltip();
 
-						$('table .delete').on('click', function() {
+				$('table .delete').on('click', function() {
+					var id = $(this).parent().find('#id').val();
+					$('#deleteEmployeeModal #id').val(id);
+				})
+
+				$('table .edit').on(
+						'click',
+						function() {
 							var id = $(this).parent().find('#id').val();
-							$('#deleteEmployeeModal #id').val(id);
+							$.ajax({
+								type : "GET",
+								url : '${pageContext.request.contextPath }/AppointmentServlet',
+								data : {
+									action : 'find',
+									id : id
+								},
+								dataType : 'json',
+								contentType : 'application/json',
+								success : function(result) {
+									$('#editEmployeeModal #id').val(result.id);
+									$('#editEmployeeModal #datepicker').val(
+											result.appointmentDate);
+									$('#editEmployeeModal #purpose').val(
+											result.purpose);
+			
+								}
+
+							})
 						})
 
-						$('table .edit')
-								.on(
-										'click',
-										function() {
-											var id = $(this).parent().find(
-													'#id').val();
-											$
-													.ajax({
-														type : "GET",
-														url : '${pageContext.request.contextPath }/PaymentServlet',
-														data : {
-															action : 'find',
-															id : id
-														},
-														dataType : 'json',
-														contentType : 'application/json',
-														success : function(
-																result) {
-															$(
-																	'#editEmployeeModal #id')
-																	.val(
-																			result.id);
-															$(
-																	'#editEmployeeModal #paymentPrice')
-																	.val(
-																			result.paymentPrice);
-															$(
-																	'#editEmployeeModal #description')
-																	.val(
-																			result.description);
-															$(
-																	'#editEmployeeModal #paymentOption')
-																	.val(
-																			result.paymentOption);
-															$(
-																	'#editEmployeeModal #hotel')
-																	.val(
-																			result.hotel);
-															$('#editEmployeeModal #userPayment').val(result.userPayment)
-
-														}
-
-													})
-										})
-
-						// Select/Deselect checkboxes
-						var checkbox = $('table tbody input[type="checkbox"]');
-						$("#selectAll").click(function() {
-							if (this.checked) {
-								checkbox.each(function() {
-									this.checked = true;
-								});
-							} else {
-								checkbox.each(function() {
-									this.checked = false;
-								});
-							}
+				// Select/Deselect checkboxes
+				var checkbox = $('table tbody input[type="checkbox"]');
+				$("#selectAll").click(function() {
+					if (this.checked) {
+						checkbox.each(function() {
+							this.checked = true;
 						});
-						checkbox.click(function() {
-							if (!this.checked) {
-								$("#selectAll").prop("checked", false);
-							}
+					} else {
+						checkbox.each(function() {
+							this.checked = false;
 						});
-					});
+					}
+				});
+				checkbox.click(function() {
+					if (!this.checked) {
+						$("#selectAll").prop("checked", false);
+					}
+				});
+			});
 </script>
 </head>
 <body>
@@ -373,13 +352,9 @@ table.table .avatar {
 				<div class="table-title">
 					<div class="row">
 						<div class="col-xs-6">
-							<h2>Quản lí Thanh Toán</h2>
+							<h2>Quản lí lịch hẹn</h2>
 						</div>
-						<div class="col-xs-6">
-							<a href="#addEmployeeModal" class="btn btn-success"
-								data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add
-									New Hotel</span></a>
-						</div>
+
 					</div>
 				</div>
 				<table class="table table-striped table-hover">
@@ -389,36 +364,35 @@ table.table .avatar {
 									type="checkbox" id="selectAll"> <label for="selectAll"></label>
 							</span></th>
 							<th>id</th>
-							<th>paymentDate</th>
-							<th>paymentPrice</th>
-							<th>paymentOption</th>
-							<th>description</th>
+							<th>appointmentDate</th>
+							<th>purpose</th>
+							<th>user</th>
+							<th>status</th>
 							<th>hotel</th>
-							<th>userPayment</th>
 						</tr>
 					</thead>
 					<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-					<c:forEach items="${payments}" var="payment">
+					<c:forEach items="${appointments}" var="appointment">
 						<tbody>
 							<tr>
 								<td><span class="custom-checkbox"> <input
 										type="checkbox" id="checkbox1" name="options[]" value="1">
 										<label for="checkbox1"></label>
 								</span></td>
-								<td>${payment.id }</td>
-								<td>${payment.paymentDate }</td>
-								<td>${payment.paymentPrice }</td>
-								<td>${payment.paymentOption }</td>
-								<td>${payment.description }</td>
-								<td>${payment.hotel.content }</td>
-								<td>${payment.userPayment }</td>
+								<td>${appointment.id }</td>
+								<td>${appointment.appointmentDate }</td>
+								<td>${appointment.purpose }</td>
+								<td>${appointment.userDatLich.name }</td>
+								<td>${appointment.status }</td>
+								<td width="300px">${appointment.hotel.content }</td>
 								<td><a href="#editEmployeeModal" class="edit"
 									data-toggle="modal"><i class="material-icons"
 										data-toggle="tooltip" title="Edit">&#xE254;</i></a> <a
 									href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i
 										class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-									<input type='hidden' name='id' id='id' value='${payment.id }'></input>
-								</td>
+
+									<input type='hidden' name='id' id='id'
+									value='${appointment.id }'></input></td>
 							</tr>
 
 						</tbody>
@@ -433,7 +407,7 @@ table.table .avatar {
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<form method="POST"
-					action='${pageContext.request.contextPath }/PaymentServlet?action=create'>
+					action='${pageContext.request.contextPath }/HotelAdminServlet?action=create'>
 					<div class="modal-header">
 						<h4 class="modal-title">Add Hotel</h4>
 						<button type="button" class="close" data-dismiss="modal"
@@ -441,37 +415,32 @@ table.table .avatar {
 					</div>
 					<div class="modal-body">
 						<div class="form-group">
-							<label>paymentPrice</label> <input type="number" id="paymentPrice"
-								name="paymentPrice" class="form-control" required>
+							<label>Title</label> <input type="text" name="content"
+								class="form-control" required>
 						</div>
 						<div class="form-group">
-							<select class="form-select" name="paymentOption"
-								id="paymentOption" style="width: 335px !important;"
-								aria-label="Default select example">
-								<option value="Momo">Momo</option>
-								<option value="Vnpay">Vnpay</option>
-								<option value="Tiền mặt">Tiền mặt</option>
-							</select>
+							<label>image</label> <input type="text" name="image"
+								class="form-control" required>
 						</div>
 						<div class="form-group">
-							<select class="form-select" id="hotel"
-								style="width: 335px !important;"
-								aria-label="Default select example" name="hotel">
-								<c:forEach var="item" items="${hotels}">
-									<option value="${item.id}">${item.content}</option>
-								</c:forEach>
-							</select>
+							<label>Area</label> <input type="text" name="area"
+								class="form-control" required>
 						</div>
 						<div class="form-group">
-							<label>User Payment</label>
-							<input id="userPayment" name="userPayment"
-								class="form-control" required></input>
+							<label>Address</label>
+							<textarea name="address" class="form-control" required></textarea>
 						</div>
-
+						<div class="form-group">
+							<label>Number Room</label> <input type="text" name="numberRoom"
+								class="form-control" required>
+						</div>
+						<div class="form-group">
+							<label>Price</label> <input type="number" name="price"
+								class="form-control" required>
+						</div>
 						<div class="form-group">
 							<label>Description</label>
-							<textarea name="description" id="description" name="desc"
-								class="form-control" required></textarea>
+							<textarea name="desc" class="form-control" required></textarea>
 						</div>
 					</div>
 					<div class="modal-footer">
@@ -488,43 +457,32 @@ table.table .avatar {
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<form method="POST"
-					action='${pageContext.request.contextPath }/PaymentServlet?action=update'>
+					action='${pageContext.request.contextPath }/AppointmentServlet?action=update'>
 					<div class="modal-header">
-						<h4 class="modal-title">Edit Payment</h4>
+						<h4 class="modal-title">Update Appointment</h4>
 						<button type="button" class="close" data-dismiss="modal"
 							aria-hidden="true">&times;</button>
 					</div>
 					<div class="modal-body">
 						<div class="form-group">
-							<label>paymentPrice</label> <input type="number" id="paymentPrice"
-								name="paymentPrice" class="form-control" required>
-						</div>
-						<div class="form-group">
-							<select class="form-select" name="paymentOption"
-								id="paymentOption" class="form-select"
-								style="width: 335px !important;"
-								aria-label="Default select example">
-								<option value="Momo">Momo</option>
-								<option value="Vnpay">Vnpay</option>
-								<option value="Tiền mặt">Tiền mặt</option>
-							</select>
-						</div>
-
-						<div class="form-group">
-							<label>User Payment</label>
-							<input id="userPayment" name="userPayment"
-								class="form-control" required></input>
-						</div>
-						<div class="form-group">
-							<label>Description</label>
-							<textarea id="description" name="description"
-								class="form-control" required></textarea>
+							<input id="datepicker" placeholder="Check in date" name="date" />
 						</div>
 					</div>
+
+					<div class="modal-body">
+						<div class="form-group">
+							<label>Mục đích</label> <input type="text" name="purpose"
+								id="purpose" class="form-control" required>
+						</div>
+					</div>
+					<input
+							type='hidden' name='id' id='id'></input>
+
 					<div class="modal-footer">
 						<input type="button" class="btn btn-default" data-dismiss="modal"
-							value="Cancel"> <input type="submit"
-							class="btn btn-success" value="Add"> <input type='hidden' name='id' id='id'></input>
+							value="Hủy"> <input type="submit" class="btn btn-success"
+							value="Đặt hẹn">
+
 					</div>
 				</form>
 			</div>
@@ -535,7 +493,7 @@ table.table .avatar {
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<form method='POST'
-					action='${pageContext.request.contextPath }/PaymentServlet?action=delete'>
+					action='${pageContext.request.contextPath }/AppointmentServlet?action=delete'>
 					<div class="modal-header">
 						<h4 class="modal-title">Delete Employee</h4>
 						<button type="button" class="close" data-dismiss="modal"

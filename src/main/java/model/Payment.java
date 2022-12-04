@@ -40,8 +40,7 @@ public class Payment implements Serializable{
 	@OneToOne(fetch = FetchType.LAZY)
 	private Hotel hotel;
 	
-	@OneToOne(fetch = FetchType.LAZY)
-	private User userPayment;
+	private String userPayment;
 	
 	public int getId() {
 		return id;
@@ -91,11 +90,11 @@ public class Payment implements Serializable{
 		this.hotel = hotel;
 	}
 
-	public User getUserPayment() {
+	public String getUserPayment() {
 		return userPayment;
 	}
 
-	public void setUserPayment(User userPayment) {
+	public void setUserPayment(String userPayment) {
 		this.userPayment = userPayment;
 	}
 

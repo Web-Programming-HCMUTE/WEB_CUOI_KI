@@ -19,10 +19,31 @@ public class HotelDAO extends JpaEntityManager implements IHotelDAO {
 		// TODO Auto-generated method stub
 		return super.getAll(Hotel.class);
 	}
+	
+	public List<Hotel> getAllHotelActive(){
+		Transaction trans = getCurentSession().beginTransaction();
+		String sql = "From Hotel h where h.activate=true";
+		Query query = getCurentSession().createQuery(sql);
+		List<Hotel> hotels = query.getResultList();
+		trans.commit();
+		return hotels;
+	}
 
 	@Override
 	public Hotel get(int id) {
 		return super.get(Hotel.class, id);
+		
+	}
+	
+	public List<Hotel> getByUser(String username){
+		Transaction trans = getCurentSession().beginTransaction();
+		String sql = "From Hotel h where h.user.name=:username";
+		Query query = getCurentSession().createQuery(sql);
+		
+		query.setParameter("username",username);
+		List<Hotel> hotels = query.getResultList();
+		trans.commit();
+		return hotels;
 		
 	}
 
