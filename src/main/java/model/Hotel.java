@@ -47,7 +47,7 @@ public class Hotel implements Serializable {
 	@OneToMany(fetch = FetchType.LAZY)
 	private List<Comment> comment;
 
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.LAZY)
 	private HotelDetail hotelDetail;
 
 	public int getId() {

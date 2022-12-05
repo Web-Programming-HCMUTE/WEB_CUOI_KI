@@ -27,6 +27,8 @@
 <link rel="stylesheet" href="./css/slicknav.css" />
 <link rel="stylesheet" href="./css/style.css" />
 <link rel="stylesheet" href="./_style.css" />
+<script src="//code.jquery.com/jquery-2.2.1.min.js"></script>
+<script src="dist/gixi-min.js"></script>
 <!-- <link rel="stylesheet" href="css/responsive.css"> -->
 </head>
 
@@ -131,6 +133,13 @@
 					<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 					<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+					<script>
+				const max = 3;
+				const min =1;
+				var r = Math.floor(Math.random() * (max - min) ) + min;
+				$("#img-comment").attr("src","./img/comment/comment_" + r+".png" );
+			</script>
+
 					<div class="comments-area">
 						<h4>Comments</h4>
 						<c:forEach items="${hotel.comment}" var="comment">
@@ -138,7 +147,7 @@
 								<div class="single-comment justify-content-between d-flex">
 									<div class="user justify-content-between d-flex">
 										<div class="thumb">
-											<img src="img/comment/comment_1.png" alt="">
+											<img id="img-comment" src="./img/comment/comment_1.png" alt="">
 										</div>
 										<div class="desc">
 											<p class="comment"
@@ -378,7 +387,8 @@
 
 					<div class="modal-body">
 						<div class="form-group">
-							<select class="form-select" aria-label="Default select example" name="purpose">
+							<select class="form-select" aria-label="Default select example"
+								name="purpose">
 								<option selected>Nội dung</option>
 								<option value="Đặt lịch hẹn">Đặt lịch hẹn</option>
 								<option value="Yêu cầu gọi lại">Yêu cầu gọi lại</option>

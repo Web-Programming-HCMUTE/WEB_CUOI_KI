@@ -70,7 +70,7 @@
 							<p>Số phòng: ${hotel.hotelDetail.numberRoom }</p>
 							<p>Giá: ${hotel.hotelDetail.price }</p>
 						</div>
-						<a href="#" class="book_now">book now</a>
+						<a href="#" class="book_now">Xem thêm</a>
 					</div>
 				</div>
 				</a>

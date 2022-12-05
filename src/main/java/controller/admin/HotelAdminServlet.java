@@ -55,8 +55,10 @@ public class HotelAdminServlet extends HttpServlet {
 		int id = Integer.parseInt(request.getParameter("id"));
 
 		Hotel hotel = postDAO.get(id);
+		HotelDetail hotelDetail = hotelDetailDAO.getHotelDetailById(hotel.getHotelDetail().getId());
 		hotel.setComment(null);
 		hotel.setUser(null);
+		hotel.setHotelDetail(hotelDetail);
 
 		Gson gson = new Gson();
 
