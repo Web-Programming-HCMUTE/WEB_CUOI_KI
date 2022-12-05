@@ -51,7 +51,15 @@ public class HotelDAO extends JpaEntityManager implements IHotelDAO {
 		Transaction trans = getCurentSession().beginTransaction();
 		String sql = "From Hotel rb INNER JOIN rb.hotelDetail where rb.content  like :keyword";
 		if(room != null) {
-			sql += " and rb.hotelDetail.numberRoom <= :room";
+			if(Integer.valueOf(room) == 1) {
+				sql += " and rb.hotelDetail.numberRoom <= :room+1";
+			}
+			else if(Integer.valueOf(room) == 3) {
+				sql += " and rb.hotelDetail.numberRoom <= :room and rb.hotelDetail.numberRoom >= :room-1";
+			}
+			else if(Integer.valueOf(room) == 5) {
+				sql += " and rb.hotelDetail.numberRoom <= :room and rb.hotelDetail.numberRoom >= :room-2";
+			}
 		}
 		if(price != null) {
 			sql += " and rb.hotelDetail.price <= :price";
