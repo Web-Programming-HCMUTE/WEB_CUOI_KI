@@ -93,8 +93,8 @@ public class AppointmentServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String actionString = request.getParameter("action");
 		request.setCharacterEncoding("UTF-8");
+		String actionString = request.getParameter("action");
 		
 		if (actionString.equalsIgnoreCase("create"))
 			try {
