@@ -68,7 +68,7 @@ public class UserLoginServlet extends HttpServlet {
 			response.sendRedirect("HomeServlet");
 		}
 		else {
-			request.setAttribute("message", "Không tìm thấy tài khoản");
+			request.setAttribute("message", "Tài khoản hoặc mật khẩu của bạn không chính xác");
 			request.getRequestDispatcher("./login.jsp").forward(request, response);
 		}
 	}

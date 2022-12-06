@@ -124,6 +124,7 @@ public class AppointmentServlet extends HttpServlet {
 	
 	protected void doPost_Create(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, ParseException {
+		request.setCharacterEncoding("UTF-8");
 		String id = request.getParameter("id");
 		if(id == null) {
 			return;
