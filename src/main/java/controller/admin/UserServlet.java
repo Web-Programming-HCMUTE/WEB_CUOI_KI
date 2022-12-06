@@ -90,6 +90,12 @@ request.setCharacterEncoding("UTF-8");
 		String username = (String) request.getParameter("username");
 		String password = (String) request.getParameter("password");
 		String role = (String) request.getParameter("role");
+		
+		User userCheck = userDAO.getByName(username);
+		if(userCheck != null) {
+			request.setAttribute("message", "Đã tồn tại username này");
+			return;
+		}
 
 		User user = new User();
 		user.setName(name);
